@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <header><h2 class="logo">Learning Hub</h2></header>
+    <main>
+        <section class="intro">
+            <h1>Big ideas start after school.</h1>
+            <p>Discover lessons and creative activities near you.</p>
+        </section>
+        <h2>Available lessons</h2>
+        <div class="lesson-container">
+            <div class="lesson-card" v-for="lesson in lessons" :key="lesson.id">
+                <i class="lesson-icon" :class="lesson.icon"></i>
+                <h3>{{ lesson.subject }}</h3>
+                <p>Location: {{ lesson.location }}</p>
+                <p>Price: Rs {{ lesson.price }}</p>
+                <p>Spaces: {{ lesson.space }}</p>
+            </div>
+        </div>
+    </main>
+    <footer>© 2026 Learning Hub</footer>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    lessons: [
+                    { id: 1, subject: "Mathematics", location: "Curepipe", price: 500, space: 5, icon: "fa-solid fa-calculator", color: "#e6d9f0" },
+                    { id: 2, subject: "English", location: "Quatre Bornes", price: 450, space: 5, icon: "fa-solid fa-book", color: "#f3d9c5" },
+                    { id: 3, subject: "Science Lab", location: "Rose Hill", price: 550, space: 5, icon: "fa-solid fa-flask", color: "#d6e8dc" },
+                    { id: 4, subject: "Music Studio", location: "Ebene", price: 600, space: 5, icon: "fa-solid fa-music", color: "#f2e6ba" },
+                    { id: 5, subject: "Creative Art", location: "Vacoas", price: 400, space: 5, icon: "fa-solid fa-palette", color: "#f3d9c5" },
+                    { id: 6, subject: "French", location: "Port Louis", price: 450, space: 5, icon: "fa-solid fa-language", color: "#e6d9f0" },
+                    { id: 7, subject: "Coding Club", location: "Moka", price: 650, space: 5, icon: "fa-solid fa-laptop-code", color: "#d6e8dc" },
+                    { id: 8, subject: "Dance Class", location: "Curepipe", price: 500, space: 5, icon: "fa-solid fa-person", color: "#f2e6ba" },
+                    { id: 9, subject: "History", location: "Rose Hill", price: 400, space: 5, icon: "fa-solid fa-landmark", color: "#e6d9f0" },
+                    { id: 10, subject: "Geography", location: "Quatre Bornes", price: 450, space: 5, icon: "fa-solid fa-earth-africa", color: "#d6e8dc" }
+                    ]
+                };
+            }
+        });
+        app.mount("#app");
+    </script>
+</div>
+</body>
+</html>
