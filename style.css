@@ -1,0 +1,560 @@
+/* =============================================================
+   Learning Hub - styles
+   Colours: deep green, warm gold and cream
+   ============================================================= */
+
+:root {
+    --green: #244d3b;
+    --green-dark: #1a3a2c;
+    --green-soft: #e8ead8;
+    --gold: #e6b956;
+    --gold-soft: #f7ebcc;
+    --cream: #f6f2e9;
+    --white: #ffffff;
+    --text: #244d3b;
+    --muted: #66766b;
+    --border: #e4dfd2;
+    --red: #a33;
+    --red-soft: #fbeaea;
+    --shadow: 0 2px 6px rgba(36, 77, 59, 0.06), 0 8px 24px rgba(36, 77, 59, 0.06);
+    --shadow-hover: 0 4px 10px rgba(36, 77, 59, 0.08), 0 14px 32px rgba(36, 77, 59, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "DM Sans", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    font-family: "Fraunces", Georgia, serif;
+    letter-spacing: -0.01em;
+}
+
+/* ---------- Header ---------- */
+
+header {
+    background: var(--green);
+    color: var(--white);
+    padding: 14px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 5px;
+    flex-shrink: 0;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.1;
+}
+
+.brand-tagline {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+}
+
+/* ---------- Buttons ---------- */
+
+button {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+button i {
+    margin-right: 6px;
+}
+
+button:not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cart-button, .back-button {
+    background: var(--gold);
+    color: var(--green);
+}
+
+.cart-button {
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* ---------- Layout ---------- */
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 20px;
+    min-height: 75vh;
+}
+
+/* ---------- Intro / hero ---------- */
+
+.intro {
+    background: var(--green-soft);
+    padding: 30px;
+    border-left: 5px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 35px;
+}
+
+.intro h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+}
+
+.intro p {
+    color: var(--muted);
+    margin: 0;
+}
+
+.section-description {
+    color: var(--muted);
+    margin-top: 0;
+}
+
+.lessons h2,
+.cart-section h2 {
+    margin-bottom: 5px;
+    font-size: 28px;
+}
+
+/* ---------- Sort bar ---------- */
+
+.sort-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 30px;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-weight: 700;
+}
+
+.sort-group i {
+    margin-right: 4px;
+    color: var(--gold);
+}
+
+.sort-group select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--green);
+    background: var(--cream);
+    cursor: pointer;
+}
+
+.sort-group .radio {
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.sort-group .radio input {
+    accent-color: var(--green);
+}
+
+/* ---------- Lesson list ---------- */
+
+.lesson-list {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.lesson-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.lesson-image {
+    background: var(--green-soft);
+    width: 88px;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 30px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.lesson-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lesson-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.lesson-details h3 {
+    margin: 0 0 8px;
+    font-size: 19px;
+}
+
+.lesson-details p {
+    margin: 4px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.lesson-details p.no-space {
+    color: var(--red);
+    font-weight: 700;
+}
+
+.lesson-details i {
+    width: 20px;
+    color: var(--gold);
+}
+
+.lesson-details p.no-space i {
+    color: var(--red);
+}
+
+.lesson-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.lesson-action strong {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 21px;
+    white-space: nowrap;
+}
+
+.lesson-action button,
+.checkout-button {
+    background: var(--green);
+    color: var(--white);
+    white-space: nowrap;
+}
+
+.lesson-action button:not(:disabled):hover,
+.checkout-button:not(:disabled):hover {
+    background: var(--green-dark);
+}
+
+/* ---------- Loading / errors ---------- */
+
+.status {
+    color: var(--muted);
+    margin-top: 20px;
+}
+
+.error-box {
+    background: var(--red-soft);
+    border-left: 5px solid var(--red);
+    color: var(--red);
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.error-box button {
+    background: var(--red);
+    color: var(--white);
+    margin-left: auto;
+}
+
+/* ---------- Cart ---------- */
+
+.cart-section {
+    max-width: 800px;
+    margin: auto;
+}
+
+.cart-item {
+    background: var(--white);
+    padding: 16px;
+    margin: 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.cart-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.cart-info > i {
+    font-size: 25px;
+    width: 55px;
+    text-align: center;
+}
+
+.cart-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.cart-info h3 {
+    margin: 0 0 4px;
+}
+
+.cart-info p {
+    margin: 3px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.remove-button {
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    font-size: 20px;
+    background: var(--gold-soft);
+    border-radius: 12px;
+    margin: 18px 0 22px;
+}
+
+.cart-total strong {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 24px;
+}
+
+/* ---------- Checkout ---------- */
+
+.checkout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.checkout h2 {
+    margin-top: 0;
+}
+
+.checkout label {
+    display: block;
+    margin: 15px 0 6px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.checkout input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    background: var(--cream);
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.checkout input:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(36, 77, 59, 0.15);
+    background: var(--white);
+}
+
+.checkout input.invalid {
+    border-color: var(--red);
+    background: #fdf3f3;
+}
+
+.error {
+    color: var(--red);
+    font-size: 13px;
+    margin: 6px 0 0;
+}
+
+.hint {
+    color: #777;
+    font-size: 13px;
+}
+
+.checkout-button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+}
+
+/* ---------- Order confirmation ---------- */
+
+.success {
+    background: #e3f0e6;
+    border-left: 5px solid var(--green);
+    padding: 15px 18px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.success i {
+    margin-right: 6px;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    background: var(--green);
+    color: #d5e0d8;
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 14px;
+}
+
+.footer-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    background: var(--cream);
+    border-radius: 9px;
+    padding: 4px;
+}
+
+footer p {
+    margin: 8px 0 0;
+}
+
+/* ---------- Smaller screens ---------- */
+
+@media (max-width: 860px) {
+    .lesson-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 12px 16px;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
+
+    .brand-tagline {
+        display: none;
+    }
+
+    .intro {
+        padding: 22px;
+    }
+
+    .intro h1 {
+        font-size: 26px;
+    }
+
+    .lesson-card {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .lesson-action {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cart-item {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}
