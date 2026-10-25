@@ -8,7 +8,7 @@
 
     <link rel="icon" type="image/png" href="Images/logo.png">
 
-    <!-- Google Fonts: Fraunces for headings, DM Sans for text -->
+    <!-- Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <!-- Cart button: only enabled once at least one lesson is in the cart -->
+            <!-- Cart button -->
             <button class="cart-button" @click="toggleCart" :disabled="cart.length === 0 && !displayCart">
                 <i :class="displayCart ? 'fa-solid fa-arrow-left' : 'fa-solid fa-cart-shopping'"></i>
                 {{ displayCart ? "Back to Lessons" : "Cart (" + numberOfItems + ")" }}
@@ -40,7 +40,7 @@
 
         <main>
 
-            <!-- ================= LESSONS PAGE ================= -->
+            <!-- lesson page -->
             <div v-if="!displayCart">
 
                 <section class="intro">
@@ -134,7 +134,7 @@
                             <div class="lesson-action">
                                 <strong>Rs {{ lesson.price }}</strong>
 
-                                <!-- Always visible, disabled when space = 0 -->
+                                <!-- disabled when space = 0 -->
                                 <button @click="addToCart(lesson)"
                                     :disabled="!canAddToCart(lesson)">
                                     <i class="fa-solid fa-plus"></i>
@@ -150,7 +150,7 @@
 
             </div>
 
-            <!-- ================= CART PAGE ================= -->
+        <!-- cart page -->
             <section v-else class="cart-section">
 
                 <h2>Shopping Cart</h2>
@@ -253,13 +253,10 @@
 
     <script>
         // Address of the back-end server
-        // (change this to your Render address once the server is hosted)
         const BASE_URL = "https://cst3144-m00983496-server.onrender.com";
 
-        // ===== TEMPORARY: test copy of the lessons =====
-        // Only used when the server cannot be reached.
-        // DELETE this array (and the 2 lines that use it in fetchData)
-        // before submitting - the lessons must come from the server.
+        //  TEMPORARY: test copy of the lessons 
+
         const TEST_LESSONS = [
             { id: 1, subject: "Mathematics", location: "Roches Brunes", price: 500, space: 5, image: "mathematics.svg", icon: "fa-solid fa-calculator" },
             { id: 2, subject: "English", location: "Phoenix", price: 450, space: 5, image: "english.svg", icon: "fa-solid fa-book" },
@@ -272,7 +269,7 @@
             { id: 9, subject: "History", location: "Curepipe", price: 400, space: 5, image: "history.svg", icon: "fa-solid fa-hourglass" },
             { id: 10, subject: "Geography", location: "Roches Brunes", price: 450, space: 5, image: "geography.svg", icon: "fa-solid fa-globe" }
         ];
-        // ===== END TEMPORARY =====
+        // end of temporary test copy
 
         const app = Vue.createApp({
 
