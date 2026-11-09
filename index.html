@@ -442,11 +442,19 @@
                         body: JSON.stringify(newOrder)
                     };
 
+                    // remember which lessons were ordered before the cart is cleared
+                    const orderedLessons = this.lessonsInCart.slice();
+
                     try {
                         let response = await fetch(url, options);
 
                         if (!response.ok) {
                             throw new Error("Server replied with " + response.status);
+                        }
+
+                        // update the spaces of each ordered lesson (PUT)
+                        for (let lesson of orderedLessons) {
+                            await this.updateLesson(lesson);
                         }
 
                         this.orderMessage = "Thank you " + newOrder.name + ", your order for " + newOrder.spaces +
@@ -462,6 +470,28 @@
                     }
 
                     this.submitting = false;
+                },
+
+                // PUT - save the new number of spaces for a lesson
+                async updateLesson(lesson) {
+                    const updateBody = {
+                        space: lesson.space
+                    };
+
+                    const url = BASE_URL + "/lessons/" + lesson._id;
+                    const options = {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(updateBody)
+                    };
+
+                    let response = await fetch(url, options);
+
+                    if (!response.ok) {
+                        throw new Error("Could not update lesson " + lesson.topic);
+                    }
                 }
 
             }
