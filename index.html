@@ -60,6 +60,16 @@
                         Choose from our {{ lessons.length }} lessons.
                     </p>
 
+                    <!-- search (done on the server) -->
+                    <div class="search-bar" v-if="lessons.length > 0">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            v-model="searchText"
+                            @input="searchLessons"
+                            placeholder="Search by subject, location, price or spaces">
+                    </div>
+
                     <!-- sorting -->
                     <div class="sort-bar" v-if="lessons.length > 0">
 
@@ -101,6 +111,10 @@
                         {{ fetchError }}
                         <button @click="fetchData">Try again</button>
                     </div>
+
+                    <p class="status" v-if="searchIds !== null && sortedLessons.length === 0">
+                        No lessons match "{{ searchText }}".
+                    </p>
 
                     <div class="lesson-list">
 
@@ -269,6 +283,10 @@
                     },
 
                     // sorting
+                    // search
+                    searchText: "",
+                    searchIds: null,
+
                     sortType: "topic",
                     ascending: true,
 
@@ -297,6 +315,11 @@
                 sortedLessons() {
                     // copy so the original array isnt changed
                     let sorted = this.lessons.slice();
+
+                    // only show the lessons the server found in the search
+                    if (this.searchIds !== null) {
+                        sorted = sorted.filter(lesson => this.searchIds.includes(lesson.id));
+                    }
                     let type = this.sortType;
                     let direction = this.ascending ? 1 : -1;
 
@@ -369,6 +392,33 @@
                     }
 
                     this.loading = false;
+                },
+
+                // search on the server - GET /search?q=...
+                async searchLessons() {
+                    const text = this.searchText.trim();
+
+                    // empty box shows every lesson again
+                    if (text === "") {
+                        this.searchIds = null;
+                        return;
+                    }
+
+                    try {
+                        const url = BASE_URL + "/search?q=" + encodeURIComponent(text);
+                        let response = await fetch(url);
+                        let results = await response.json();
+
+                        // ignore old results if the user kept typing
+                        if (text !== this.searchText.trim()) {
+                            return;
+                        }
+
+                        // keep the ids of the lessons that matched
+                        this.searchIds = results.map(lesson => lesson.id);
+                    } catch (error) {
+                        console.log(error);
+                    }
                 },
 
                 imageUrl(lesson) {
