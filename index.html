@@ -98,6 +98,20 @@
                             </label>
                         </div>
 
+                        <!-- teachers -->
+                        <div class="sort-group" v-if="teachers.length > 0">
+                            <label for="teacher">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                Teacher
+                            </label>
+                            <select id="teacher" v-model="teacherId" @change="filterByTeacher">
+                                <option value="">All teachers</option>
+                                <option v-for="teacher in teachers" :key="teacher.id" :value="teacher.id">
+                                    {{ teacher.firstName }} {{ teacher.lastName }}
+                                </option>
+                            </select>
+                        </div>
+
                     </div>
 
                     <!-- loading and error message -->
@@ -112,8 +126,8 @@
                         <button @click="fetchData">Try again</button>
                     </div>
 
-                    <p class="status" v-if="searchIds !== null && sortedLessons.length === 0">
-                        No lessons match "{{ searchText }}".
+                    <p class="status" v-if="(searchIds !== null || teacherIds !== null) && sortedLessons.length === 0">
+                        No lessons found.
                     </p>
 
                     <div class="lesson-list">
@@ -137,6 +151,11 @@
                                 <p>
                                     <i class="fa-solid fa-location-dot"></i>
                                     {{ lesson.location }}
+                                </p>
+
+                                <p v-if="teacherName(lesson)">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                    {{ teacherName(lesson) }}
                                 </p>
 
                                 <p :class="{ 'no-space': lesson.space === 0 }">
@@ -287,6 +306,11 @@
                     searchText: "",
                     searchIds: null,
 
+                    // teachers
+                    teachers: [],
+                    teacherId: "",
+                    teacherIds: null,
+
                     sortType: "topic",
                     ascending: true,
 
@@ -303,6 +327,7 @@
             // get the lessons when the app loads
             created() {
                 this.fetchData();
+                this.fetchTeachers();
             },
 
             computed: {
@@ -319,6 +344,11 @@
                     // only show the lessons the server found in the search
                     if (this.searchIds !== null) {
                         sorted = sorted.filter(lesson => this.searchIds.includes(lesson.id));
+                    }
+
+                    // only show the chosen teacher's lessons
+                    if (this.teacherIds !== null) {
+                        sorted = sorted.filter(lesson => this.teacherIds.includes(lesson.id));
                     }
                     let type = this.sortType;
                     let direction = this.ascending ? 1 : -1;
@@ -392,6 +422,47 @@
                     }
 
                     this.loading = false;
+                },
+
+                // GET all teachers for the dropdown
+                async fetchTeachers() {
+                    try {
+                        let response = await fetch(BASE_URL + "/teachers");
+                        this.teachers = await response.json();
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+
+                // GET the lessons of the chosen teacher
+                async filterByTeacher() {
+                    // "All teachers" shows every lesson again
+                    if (this.teacherId === "") {
+                        this.teacherIds = null;
+                        return;
+                    }
+
+                    try {
+                        const url = BASE_URL + "/teachers/" + this.teacherId + "/lessons";
+                        let response = await fetch(url);
+                        let results = await response.json();
+                        this.teacherIds = results.map(lesson => lesson.id);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                },
+
+                // names of the teachers of a lesson, e.g. "Priya Ramdass"
+                teacherName(lesson) {
+                    let names = [];
+
+                    for (let teacher of this.teachers) {
+                        if (teacher.lessonIDs.includes(lesson.id)) {
+                            names.push(teacher.firstName + " " + teacher.lastName);
+                        }
+                    }
+
+                    return names.join(", ");
                 },
 
                 // search on the server - GET /search?q=...
