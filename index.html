@@ -69,7 +69,7 @@
                                 Sort by
                             </label>
                             <select id="sortType" v-model="sortType">
-                                <option value="subject">Subject</option>
+                                <option value="topic">Subject</option>
                                 <option value="location">Location</option>
                                 <option value="price">Price</option>
                                 <option value="space">Spaces</option>
@@ -112,13 +112,13 @@
                             <div class="lesson-image">
                                 <img v-if="!lesson.imageFailed"
                                     :src="imageUrl(lesson)"
-                                    :alt="lesson.subject"
+                                    :alt="lesson.topic"
                                     @error="lesson.imageFailed = true">
                                 <i v-else :class="lesson.icon"></i>
                             </div>
 
                             <div class="lesson-details">
-                                <h3>{{ lesson.subject }}</h3>
+                                <h3>{{ lesson.topic }}</h3>
 
                                 <p>
                                     <i class="fa-solid fa-location-dot"></i>
@@ -165,12 +165,12 @@
                         <img v-if="!lesson.imageFailed"
                             class="cart-image"
                             :src="imageUrl(lesson)"
-                            :alt="lesson.subject"
+                            :alt="lesson.topic"
                             @error="lesson.imageFailed = true">
                         <i v-else :class="lesson.icon"></i>
 
                         <div>
-                            <h3>{{ lesson.subject }}</h3>
+                            <h3>{{ lesson.topic }}</h3>
                             <p>{{ lesson.location }}</p>
                             <p>Quantity: {{ cartItemCount(lesson.id) }} × Rs {{ lesson.price }}</p>
                             <strong>Rs {{ lesson.price * cartItemCount(lesson.id) }}</strong>
@@ -269,7 +269,7 @@
                     },
 
                     // sorting
-                    sortType: "subject",
+                    sortType: "topic",
                     ascending: true,
 
                     // lessons come from the server
@@ -302,7 +302,7 @@
 
                     sorted.sort(function(a, b) {
                         if (typeof a[type] === "string") {
-                            // text (subject, location)
+                            // text (topic, location)
                             return a[type].localeCompare(b[type]) * direction;
                         }
 
@@ -449,10 +449,7 @@
                             throw new Error("Server replied with " + response.status);
                         }
 
-                        let result = await response.json();
-
-                        this.orderMessage = "Thank you " + newOrder.name + ", your order #" +
-                            result.orderNumber + " for " + newOrder.spaces +
+                        this.orderMessage = "Thank you " + newOrder.name + ", your order for " + newOrder.spaces +
                             (newOrder.spaces === 1 ? " lesson" : " lessons") + " has been submitted!";
 
                         this.cart = [];
